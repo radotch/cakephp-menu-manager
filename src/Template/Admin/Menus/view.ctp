@@ -14,7 +14,7 @@
         <li><?= $this->Html->link(__('New Menu'), ['action' => 'add']) ?> </li>
         <li class="divider"></li>
         <li><?= $this->Html->link(__('List Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Menu Link'), ['controller' => 'MenuLinks', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('Add Menu Link'), ['controller' => 'MenuLinks', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="menus view large-9 medium-8 columns content">
@@ -43,6 +43,13 @@
     </table>
     <div class="related">
         <h4><?= __('Related Menu Links') ?></h4>
+        <div>
+            <?= $this->Html->link(
+                __('Add Menu Link'),
+                ['controller' => 'MenuLinks', 'action' => 'addTo', $menu->id, NULL],
+                ['class' => 'button small secondary']
+            ) ?>
+        </div>
         <?php if (!empty($menu->menu_links)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>

@@ -19,11 +19,12 @@
         <li><?= $this->Html->link(__('List Parent Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Parent Menu Link'), ['controller' => 'MenuLinks', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Child Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Child Menu Link'), ['controller' => 'MenuLinks', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('New Child Menu Link'), ['controller' => 'MenuLinks', 'action' => 'addTo', $menuLink->menu_id, $menuLink->id]) ?> </li>
     </ul>
 </nav>
 <div class="menuLinks view large-9 medium-8 columns content">
     <h3><?= __('Menu Link preview') ?></h3>
+    
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Title') ?></th>
@@ -68,6 +69,14 @@
     </table>
     <div class="related">
         <h4><?= __('Related Menu Links') ?></h4>
+        <div>
+            <?= $this->Html->link(
+                __('Add New Child Menu Link'),
+                ['controller' => 'MenuLinks', 'action' => 'addTo', $menuLink->menu_id, $menuLink->id],
+                ['class' => 'button small secondary']
+            ) ?>
+        </div>
+        
         <?php if (!empty($menuLink->child_menu_links)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
