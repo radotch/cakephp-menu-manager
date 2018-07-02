@@ -57,7 +57,10 @@
             <tr>
                 <td><?= h($menuLinks->title) ?></td>
                 <td><?= h($menuLinks->url) ?></td>
-                <td><?= h($menuLinks->parent_id) ?></td>
+                <td><?= $menuLinks->has('parent_menu_link') ?
+                            $this->Html->link(h($menuLinks->parent_menu_link->title), ['controller' => 'MenuLinks', 'action' => 'view', $menuLinks->parent_menu_link->id]) :
+                            h($menuLinks->parent_id) ?>
+                </td>
                 <td><?= h($menuLinks->is_active) ?></td>
                 <td><?= h($menuLinks->created) ?></td>
                 <td class="actions">
