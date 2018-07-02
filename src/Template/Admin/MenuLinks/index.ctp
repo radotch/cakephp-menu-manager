@@ -21,8 +21,8 @@
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('title') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('url') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('menu_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('parent_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('menu_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('is_active') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -33,8 +33,8 @@
             <tr>
                 <td><?= h($menuLink->title) ?></td>
                 <td><?= h($menuLink->url) ?></td>
-                <td><?= $menuLink->has('menu') ? $this->Html->link($menuLink->menu->title, ['controller' => 'Menus', 'action' => 'view', $menuLink->menu->id]) : '' ?></td>
                 <td><?= $menuLink->has('parent_menu_link') ? $this->Html->link($menuLink->parent_menu_link->title, ['controller' => 'MenuLinks', 'action' => 'view', $menuLink->parent_menu_link->id]) : '' ?></td>
+                <td><?= $menuLink->has('menu') ? $this->Html->link($menuLink->menu->title, ['controller' => 'Menus', 'action' => 'view', $menuLink->menu->id]) : '' ?></td>
                 <td><?= h($menuLink->is_active) ?></td>
                 <td><?= h($menuLink->created) ?></td>
                 <td class="actions">
