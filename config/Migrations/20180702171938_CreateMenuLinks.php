@@ -44,7 +44,7 @@ class CreateMenuLinks extends AbstractMigration
             'null' => false,
         ]);
         $table->addColumn('is_active', 'boolean', [
-            'default' => FALSE,
+            'default' => 1,
             'null' => false,
         ]);
         $table->addColumn('created', 'datetime', [
