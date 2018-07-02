@@ -15,9 +15,10 @@
     </ul>
 </nav>
 <div class="menus form large-9 medium-8 columns content">
+    <h3><?= __('Add menu') ?></h3>
     <?= $this->Form->create($menu) ?>
     <fieldset>
-        <legend><?= __('Add Menu') ?></legend>
+        <legend><?= __('Menu data') ?></legend>
         <?php
             echo $this->Form->control('title');
             echo $this->Form->control('alias');

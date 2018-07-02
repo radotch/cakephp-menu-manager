@@ -18,9 +18,10 @@
     </ul>
 </nav>
 <div class="menuLinks form large-9 medium-8 columns content">
+    <h3><?= __('Add Menu Link') ?></h3>
     <?= $this->Form->create($menuLink) ?>
     <fieldset>
-        <legend><?= __('Add Menu Link') ?></legend>
+        <legend><?= __('Menu Link data') ?></legend>
         <?php
             echo $this->Form->control('title');
             echo $this->Form->control('url');

@@ -18,7 +18,7 @@
     </ul>
 </nav>
 <div class="menus view large-9 medium-8 columns content">
-    <h3><?= h($menu->title) ?></h3>
+    <h3><?= __('Menu preview') ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Title') ?></th>

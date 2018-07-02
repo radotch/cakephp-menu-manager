@@ -21,9 +21,11 @@
     </ul>
 </nav>
 <div class="menus form large-9 medium-8 columns content">
+    <h3><?= __('Menu preview') ?></h3>
+    
     <?= $this->Form->create($menu) ?>
     <fieldset>
-        <legend><?= __('Edit Menu') ?></legend>
+        <legend><?= __('Menu') . ': ' . h($menu->title) ?></legend>
         <?php
             echo $this->Form->control('title');
             echo $this->Form->control('alias', ['disabled']);
