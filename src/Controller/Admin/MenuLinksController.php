@@ -154,4 +154,14 @@ class MenuLinksController extends AppController
         
         $this->viewBuilder()->setTemplate('add');
     }
+    
+    
+    public function tree()
+    {
+        $menuLinksGroups = $this->MenuLinks->find('threaded')
+                ->contain(['Menus'])
+                ->groupBy('menu.title');
+        
+        $this->set('menuLinksGroups', $menuLinksGroups);
+    }
 }
