@@ -1,8 +1,16 @@
 {
-    "name": "your-name-here/MenuManager",
+    "name": "radotch/cakephp-menu-manager",
     "description": "MenuManager plugin for CakePHP",
     "type": "cakephp-plugin",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Radoslav Cholakov",
+            "email": "tcholakov_radoslav@yahoo.com",
+            "homepage": "http://rado.etnasoft.eu",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "cakephp/cakephp": "^3.5"
     },
