@@ -62,7 +62,7 @@ class MenuLinksController extends AppController
             $this->Flash->error(__('The menu link could not be saved. Please, try again.'));
         }
         $menus = $this->MenuLinks->Menus->find('list', ['limit' => 200]);
-        $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('list', ['limit' => 200]);
+        $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', ['spacer' => '-- ']);
         $this->set(compact('menuLink', 'menus', 'parentMenuLinks'));
     }
 
@@ -88,7 +88,7 @@ class MenuLinksController extends AppController
             $this->Flash->error(__('The menu link could not be saved. Please, try again.'));
         }
         $menus = $this->MenuLinks->Menus->find('list', ['limit' => 200]);
-        $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('list', ['limit' => 200]);
+        $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', ['spacer' => '-- ']);
         $this->set(compact('menuLink', 'menus', 'parentMenuLinks'));
     }
 
