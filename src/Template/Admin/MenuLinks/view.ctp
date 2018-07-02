@@ -71,30 +71,22 @@
         <?php if (!empty($menuLink->child_menu_links)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('Title') ?></th>
                 <th scope="col"><?= __('Url') ?></th>
                 <th scope="col"><?= __('Menu Id') ?></th>
                 <th scope="col"><?= __('Parent Id') ?></th>
-                <th scope="col"><?= __('Lft') ?></th>
-                <th scope="col"><?= __('Rght') ?></th>
                 <th scope="col"><?= __('Is Active') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
-                <th scope="col"><?= __('Modified') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($menuLink->child_menu_links as $childMenuLinks): ?>
             <tr>
-                <td><?= h($childMenuLinks->id) ?></td>
                 <td><?= h($childMenuLinks->title) ?></td>
                 <td><?= h($childMenuLinks->url) ?></td>
                 <td><?= h($childMenuLinks->menu_id) ?></td>
                 <td><?= h($childMenuLinks->parent_id) ?></td>
-                <td><?= h($childMenuLinks->lft) ?></td>
-                <td><?= h($childMenuLinks->rght) ?></td>
                 <td><?= h($childMenuLinks->is_active) ?></td>
                 <td><?= h($childMenuLinks->created) ?></td>
-                <td><?= h($childMenuLinks->modified) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'MenuLinks', 'action' => 'view', $childMenuLinks->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'MenuLinks', 'action' => 'edit', $childMenuLinks->id]) ?>

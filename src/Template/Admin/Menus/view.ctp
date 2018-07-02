@@ -46,30 +46,20 @@
         <?php if (!empty($menu->menu_links)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('Title') ?></th>
                 <th scope="col"><?= __('Url') ?></th>
-                <th scope="col"><?= __('Menu Id') ?></th>
                 <th scope="col"><?= __('Parent Id') ?></th>
-                <th scope="col"><?= __('Lft') ?></th>
-                <th scope="col"><?= __('Rght') ?></th>
                 <th scope="col"><?= __('Is Active') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
-                <th scope="col"><?= __('Modified') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($menu->menu_links as $menuLinks): ?>
             <tr>
-                <td><?= h($menuLinks->id) ?></td>
                 <td><?= h($menuLinks->title) ?></td>
                 <td><?= h($menuLinks->url) ?></td>
-                <td><?= h($menuLinks->menu_id) ?></td>
                 <td><?= h($menuLinks->parent_id) ?></td>
-                <td><?= h($menuLinks->lft) ?></td>
-                <td><?= h($menuLinks->rght) ?></td>
                 <td><?= h($menuLinks->is_active) ?></td>
                 <td><?= h($menuLinks->created) ?></td>
-                <td><?= h($menuLinks->modified) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'MenuLinks', 'action' => 'view', $menuLinks->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'MenuLinks', 'action' => 'edit', $menuLinks->id]) ?>

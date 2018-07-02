@@ -19,28 +19,24 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('title') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('url') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('menu_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('parent_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('is_active') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($menuLinks as $menuLink): ?>
             <tr>
-                <td><?= $this->Number->format($menuLink->id) ?></td>
                 <td><?= h($menuLink->title) ?></td>
                 <td><?= h($menuLink->url) ?></td>
                 <td><?= $menuLink->has('menu') ? $this->Html->link($menuLink->menu->title, ['controller' => 'Menus', 'action' => 'view', $menuLink->menu->id]) : '' ?></td>
                 <td><?= $menuLink->has('parent_menu_link') ? $this->Html->link($menuLink->parent_menu_link->title, ['controller' => 'MenuLinks', 'action' => 'view', $menuLink->parent_menu_link->id]) : '' ?></td>
                 <td><?= h($menuLink->is_active) ?></td>
                 <td><?= h($menuLink->created) ?></td>
-                <td><?= h($menuLink->modified) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $menuLink->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $menuLink->id]) ?>
