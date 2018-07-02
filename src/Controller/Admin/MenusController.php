@@ -62,7 +62,7 @@ class MenusController extends AppController
     }
 
     /**
-     * Edit method
+     * Edit Menu. Method disable access to 'alias' field.
      *
      * @param string|null $id Menu id.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
@@ -73,6 +73,9 @@ class MenusController extends AppController
         $menu = $this->Menus->get($id, [
             'contain' => []
         ]);
+        
+        $menu->setAccess('alias', FALSE);
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
             $menu = $this->Menus->patchEntity($menu, $this->request->getData());
             if ($this->Menus->save($menu)) {

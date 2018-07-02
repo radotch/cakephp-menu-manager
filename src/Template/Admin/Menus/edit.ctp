@@ -26,7 +26,7 @@
         <legend><?= __('Edit Menu') ?></legend>
         <?php
             echo $this->Form->control('title');
-            echo $this->Form->control('alias');
+            echo $this->Form->control('alias', ['disabled']);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
