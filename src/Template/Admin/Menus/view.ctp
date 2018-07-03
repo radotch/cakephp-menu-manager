@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \Cake\Datasource\EntityInterface $menu
+ * @var string|NULL $relatedPreview How to preview related Menu Links - as List or Tree
  */
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
@@ -44,40 +45,52 @@
     <div class="related">
         <h4><?= __('Related Menu Links') ?></h4>
         <div>
-            <?= $this->Html->link(
-                __('Add Menu Link'),
-                ['controller' => 'MenuLinks', 'action' => 'addTo', $menu->id, NULL],
-                ['class' => 'button small secondary']
-            ) ?>
+            <?php
+            echo $this->Html->link(
+                    __('Add Menu Link'),
+                    ['controller' => 'MenuLinks', 'action' => 'addTo', $menu->id, NULL],
+                    ['class' => 'button small secondary']
+                );
+            echo '&nbsp;';
+            echo $relatedPreview === NULL ?
+                    $this->Html->link(__('View as Tree'), ['action' => 'view', $menu->id, '?' => ['related_preview' => 'tree']], ['class' => 'button small warning']) :
+                    $this->Html->link(__('View as List'), ['action' => 'view', $menu->id], ['class' => 'button small secondary']);
+            ?>
         </div>
         <?php if (!empty($menu->menu_links)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Title') ?></th>
-                <th scope="col"><?= __('Url') ?></th>
-                <th scope="col"><?= __('Parent Id') ?></th>
-                <th scope="col"><?= __('Is Active') ?></th>
-                <th scope="col"><?= __('Created') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($menu->menu_links as $menuLinks): ?>
-            <tr>
-                <td><?= h($menuLinks->title) ?></td>
-                <td><?= h($menuLinks->url) ?></td>
-                <td><?= $menuLinks->has('parent_menu_link') ?
-                            $this->Html->link(h($menuLinks->parent_menu_link->title), ['controller' => 'MenuLinks', 'action' => 'view', $menuLinks->parent_menu_link->id]) :
-                            h($menuLinks->parent_id) ?>
-                </td>
-                <td><?= h($menuLinks->is_active) ?></td>
-                <td><?= h($menuLinks->created) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'MenuLinks', 'action' => 'view', $menuLinks->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'MenuLinks', 'action' => 'edit', $menuLinks->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'MenuLinks', 'action' => 'delete', $menuLinks->id], ['confirm' => __('Are you sure you want to delete # {0}?', $menuLinks->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
+            <?php if ($relatedPreview === NULL): ?>
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <th scope="col"><?= __('Title') ?></th>
+                    <th scope="col"><?= __('Url') ?></th>
+                    <th scope="col"><?= __('Parent Id') ?></th>
+                    <th scope="col"><?= __('Is Active') ?></th>
+                    <th scope="col"><?= __('Created') ?></th>
+                    <th scope="col" class="actions"><?= __('Actions') ?></th>
+                </tr>
+                <?php foreach ($menu->menu_links as $menuLinks): ?>
+                <tr>
+                    <td><?= h($menuLinks->title) ?></td>
+                    <td><?= h($menuLinks->url) ?></td>
+                    <td><?= $menuLinks->has('parent_menu_link') ?
+                                $this->Html->link(h($menuLinks->parent_menu_link->title), ['controller' => 'MenuLinks', 'action' => 'view', $menuLinks->parent_menu_link->id]) :
+                                h($menuLinks->parent_id) ?>
+                    </td>
+                    <td><?= h($menuLinks->is_active) ?></td>
+                    <td><?= h($menuLinks->created) ?></td>
+                    <td class="actions">
+                        <?= $this->Html->link(__('View'), ['controller' => 'MenuLinks', 'action' => 'view', $menuLinks->id]) ?>
+                        <?= $this->Html->link(__('Edit'), ['controller' => 'MenuLinks', 'action' => 'edit', $menuLinks->id]) ?>
+                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'MenuLinks', 'action' => 'delete', $menuLinks->id], ['confirm' => __('Are you sure you want to delete # {0}?', $menuLinks->id)]) ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <?php elseif ($relatedPreview === 'tree'): ?>
+                <div class="menu-links tree-preview">
+                    <?= $this->element('MenuLinks/tree_list', ['menuLinks' => $menu->menu_links]) ?>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
 </div>

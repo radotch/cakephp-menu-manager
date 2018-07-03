@@ -26,7 +26,8 @@ class MenusController extends AppController
     }
 
     /**
-     * View method
+     * View method get Menu which contain Menu Links. Menu Links finder is based
+     * on URL query.
      *
      * @param string|null $id Menu id.
      * @return \Cake\Http\Response|void
@@ -34,13 +35,16 @@ class MenusController extends AppController
      */
     public function view($id = null)
     {
+        $relatedPreview = $this->request->getQuery('related_preview', NULL);
+        $menuLinksFinder = $relatedPreview === 'tree' ? 'threaded' : 'all';
         $menu = $this->Menus->get($id, [
             'contain' => [
-                'MenuLinks',
+                'MenuLinks' => ['finder' => $menuLinksFinder],
                 'MenuLinks.ParentMenuLinks']
         ]);
 
         $this->set('menu', $menu);
+        $this->set('relatedPreview', $relatedPreview);
     }
 
     /**
