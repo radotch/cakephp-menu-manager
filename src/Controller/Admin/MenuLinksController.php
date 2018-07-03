@@ -155,7 +155,12 @@ class MenuLinksController extends AppController
         $this->viewBuilder()->setTemplate('add');
     }
     
-    
+    /**
+     * Method gets all Menu Link as 'threaded' and grouped by Menu title.
+     * 
+     * @param none
+     * @return \Cake\Http\Response|void
+     */
     public function tree()
     {
         $menuLinksGroups = $this->MenuLinks->find('threaded')
