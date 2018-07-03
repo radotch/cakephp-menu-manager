@@ -69,6 +69,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Menu Links') ?></h4>
+        <p class="subheader" style="margin-top: -0.75rem; margin-bottom: 1.5rem;"><?= __('(Only direct children)')  ?></p>
         <div>
             <?= $this->Html->link(
                 __('Add New Child Menu Link'),
@@ -82,8 +83,6 @@
             <tr>
                 <th scope="col"><?= __('Title') ?></th>
                 <th scope="col"><?= __('Url') ?></th>
-                <th scope="col"><?= __('Menu Id') ?></th>
-                <th scope="col"><?= __('Parent Id') ?></th>
                 <th scope="col"><?= __('Is Active') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -92,8 +91,6 @@
             <tr>
                 <td><?= h($childMenuLinks->title) ?></td>
                 <td><?= h($childMenuLinks->url) ?></td>
-                <td><?= h($childMenuLinks->menu_id) ?></td>
-                <td><?= h($childMenuLinks->parent_id) ?></td>
                 <td><?= h($childMenuLinks->is_active) ?></td>
                 <td><?= h($childMenuLinks->created) ?></td>
                 <td class="actions">
