@@ -52,13 +52,13 @@
                     ['class' => 'button small secondary']
                 );
             echo '&nbsp;';
-            echo $relatedPreview === NULL ?
-                    $this->Html->link(__('View as Tree'), ['action' => 'view', $menu->id, '?' => ['related_preview' => 'tree']], ['class' => 'button small warning']) :
+            echo $relatedLinksPreview === 'list' ?
+                    $this->Html->link(__('View as Tree'), ['action' => 'view', $menu->id, '?' => ['related_links_preview' => 'tree']], ['class' => 'button small warning']) :
                     $this->Html->link(__('View as List'), ['action' => 'view', $menu->id], ['class' => 'button small secondary']);
             ?>
         </div>
         <?php if (!empty($menu->menu_links)): ?>
-            <?php if ($relatedPreview === NULL): ?>
+            <?php if ($relatedLinksPreview === 'list'): ?>
             <table cellpadding="0" cellspacing="0">
                 <tr>
                     <th scope="col"><?= __('Title') ?></th>
@@ -86,7 +86,7 @@
                 </tr>
                 <?php endforeach; ?>
             </table>
-            <?php elseif ($relatedPreview === 'tree'): ?>
+            <?php elseif ($relatedLinksPreview === 'tree'): ?>
                 <div class="menu-links tree-preview">
                     <?= $this->element('MenuLinks/tree_list', ['menuLinks' => $menu->menu_links]) ?>
                 </div>

@@ -35,8 +35,8 @@ class MenusController extends AppController
      */
     public function view($id = null)
     {
-        $relatedPreview = $this->request->getQuery('related_preview', NULL);
-        $menuLinksFinder = $relatedPreview === 'tree' ? 'threaded' : 'all';
+        $relatedLinksPreview = $this->request->getQuery('related_links_preview') !== 'tree' ? 'list' : 'tree';
+        $menuLinksFinder = $relatedLinksPreview === 'tree' ? 'threaded' : 'all';
         $menu = $this->Menus->get($id, [
             'contain' => [
                 'MenuLinks' => ['finder' => $menuLinksFinder],
@@ -44,7 +44,7 @@ class MenusController extends AppController
         ]);
 
         $this->set('menu', $menu);
-        $this->set('relatedPreview', $relatedPreview);
+        $this->set('relatedLinksPreview', $relatedLinksPreview);
     }
 
     /**
