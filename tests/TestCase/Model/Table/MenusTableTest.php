@@ -59,7 +59,36 @@ class MenusTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->assertEquals('menus', $this->Menus->getTable(), __('Wrong table. Must use table menus.'));
+        $this->assertEquals('title', $this->Menus->getDisplayField(), __('Wrong display field. Set it to "title".'));
+        $this->assertEquals('id', $this->Menus->getPrimaryKey(), __('Wrong primary key. Expect "id", but got {0} instead.', $this->Menus->getPrimaryKey()));
+    }
+    
+    /**
+     * Test if Model Menus has Timestamp behavior
+     * 
+     * @param none
+     * @return void.
+     */
+    public function testModelHasTimestampBehavior()
+    {
+        $this->assertTrue($this->Menus->hasBehavior('Timestamp'), __('Missing Timestamp behavior. Add it to model.'));
+    }
+    
+    /**
+     * Test if Model Menus is associated with MenuLinks model and association options.
+     * 
+     * @param none
+     * @return void
+     */
+    public function testHasManyMenuLinksAssociation()
+    {
+        $this->assertTrue($this->Menus->hasAssociation('MenuLinks'), __('Missing Association to MenuLinks model.'));
+        
+        $association = $this->Menus->getAssociation('MenuLinks');
+        
+        $this->assertEquals(TRUE, $association->getDependent(), __('Dependent option for association is not set to TRUE.'));
+        $this->assertEquals('INNER', $association->getJoinType());
     }
 
     /**
@@ -69,6 +98,9 @@ class MenusTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $validator = $this->Menus->getValidator();
+        $fields = ['id', 'title', 'alias'];
+        
+        $this->assertEquals(count($fields), $validator->count(), __('Missing or additionl filds for validation.'));
     }
 }
