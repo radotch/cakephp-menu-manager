@@ -1,9 +1,5 @@
 # MenuManager plugin for CakePHP
 
-## Note
-
-This plugin is under construction. Even though you can try it and if cover your needs use it.
-
 ## Requirements
 
 ```
@@ -14,7 +10,7 @@ This plugin is under construction. Even though you can try it and if cover your 
 For testing:
 
 ```
- - phpunit >= 6.5.x
+ - phpunit ^5.7.14|^6.x
 ```
 ## Features
 
@@ -31,6 +27,8 @@ The recommended way to install plugin is:
 ```
 composer require radotch/cakephp-menu-manager
 ```
+
+## Load plugin
 
 To make the plugin available in the application execute on your command-line:
 
@@ -55,7 +53,7 @@ public function bootstrap()
 }
 ```
 
-And you are ready to use MenuManager.
+And you are ready to use MenuManager plugin.
 
 ## Migrations
 
@@ -73,11 +71,13 @@ $ path/to/project> bin/cake migrations seed --plugin MenuManager
 
 ## Usage
 
+### Control panel
+
 Plugin's Control panel is available on '/admin/menu-manager/'. ***Do not forget to restrict access***
 
 Now you can create Menus and add Menu Links.
 
-### Get Menu
+### Get Data
 
 To get Menu Links in hierarchical structure use 'threaded' finder:
 ```
@@ -95,6 +95,8 @@ $menuLinks = $this->MenuLinks->find('threaded')
         // Some query requirements
         ->where(['menu_id' => $menuId]);
 ```
+
+### Display Menu
 
 At this stage to display menu you have to write your own code.
 
