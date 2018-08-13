@@ -82,7 +82,9 @@ Now you can create Menus and add Menu Links.
 To get Menu Links in hierarchical structure use 'threaded' finder:
 ```
 // In controller
-$menu = $this->Menus->find()
+$menu = $this->TableRegistry::getTableLocator()
+        ->get('MenuManager.Menus')
+        ->find()
         ->contain(['MenuLinks' => ['finder' => 'threaded']])
         ->where([$whereConditions]);
 ```
@@ -91,7 +93,9 @@ Or
 
 ```
 // In controller
-$menuLinks = $this->MenuLinks->find('threaded')
+$menuLinks = $this->TableRegistry::getTableLocator()
+        ->get('MenuManager.MenuLinks')
+        ->find('threaded')
         // Some query requirements
         ->where(['menu_id' => $menuId]);
 ```
