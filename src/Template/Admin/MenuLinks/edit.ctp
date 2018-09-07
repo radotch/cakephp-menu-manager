@@ -36,6 +36,20 @@
             echo $this->Form->control('is_active');
         ?>
     </fieldset>
+    
+    <?php if (!empty($translationLocales)): ?>
+    <h4><?= __('Menu Link Translations') ?></h4>
+        <?php foreach ($translationLocales as $locale): ?>
+            <fieldset>
+                <legend><?= Locale::getDisplayName($locale) ?></legend>
+                    <?= $this->Form->control('_translations.' . $locale . '.title', [
+                        'required' => false,
+                        'label' => __('Title')
+                    ]) ?>
+            </fieldset>
+        <?php endforeach; ?>
+    <?php endif; ?>
+
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>
