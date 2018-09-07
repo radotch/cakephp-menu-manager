@@ -62,9 +62,12 @@ class MenuLinksController extends AppController
             }
             $this->Flash->error(__('The menu link could not be saved. Please, try again.'));
         }
+        
         $menus = $this->MenuLinks->Menus->find('list', ['limit' => 200]);
         $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', ['spacer' => '-- ']);
-        $this->set(compact('menuLink', 'menus', 'parentMenuLinks'));
+        $translationLocales = $this->_getTranslationLocales();
+        
+        $this->set(compact('menuLink', 'menus', 'parentMenuLinks', 'translationLocales'));
     }
 
     /**
@@ -88,9 +91,12 @@ class MenuLinksController extends AppController
             }
             $this->Flash->error(__('The menu link could not be saved. Please, try again.'));
         }
+        
         $menus = $this->MenuLinks->Menus->find('list', ['limit' => 200]);
         $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', ['spacer' => '-- ']);
-        $this->set(compact('menuLink', 'menus', 'parentMenuLinks'));
+        $translationLocales = $this->_getTranslationLocales();
+        
+        $this->set(compact('menuLink', 'menus', 'parentMenuLinks', 'translationLocales'));
     }
 
     /**
@@ -150,8 +156,9 @@ class MenuLinksController extends AppController
             'spacer' => '-- ',
             'conditions' => ['menu_id' => $menuId]
         ]);
+        $translationLocales = $this->_getTranslationLocales();
         
-        $this->set(compact('menuLink', 'menus', 'parentMenuLinks'));
+        $this->set(compact('menuLink', 'menus', 'parentMenuLinks', 'translationLocales'));
         
         $this->viewBuilder()->setTemplate('add');
     }
