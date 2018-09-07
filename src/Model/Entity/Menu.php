@@ -2,6 +2,7 @@
 namespace MenuManager\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\ORM\Behavior\Translate\TranslateTrait;
 
 /**
  * Menu Entity
@@ -16,6 +17,7 @@ use Cake\ORM\Entity;
  */
 class Menu extends Entity
 {
+    use TranslateTrait;
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -31,6 +33,7 @@ class Menu extends Entity
         'alias' => true,
         'created' => true,
         'modified' => true,
-        'menu_links' => true
+        'menu_links' => true,
+        '_translations' => true
     ];
 }
