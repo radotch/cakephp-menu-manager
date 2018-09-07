@@ -9,6 +9,7 @@ use MenuManager\Controller\AppController;
  * @property \MenuManager\Model\Table\MenusTable $Menus
  *
  * @method \MenuManager\Model\Entity\Menu[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method AppController _getTranslationLocales()
  */
 class MenusController extends AppController
 {
