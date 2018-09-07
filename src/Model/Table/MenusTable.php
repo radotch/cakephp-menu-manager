@@ -5,6 +5,8 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Event\Event;
+use ArrayObject;
 
 /**
  * Menus Model
@@ -89,5 +91,22 @@ class MenusTable extends Table
         $rules->add($rules->isUnique(['alias'], __('This alaias is already in use.')));
 
         return $rules;
+    }
+    
+    /**
+     * Method removes empty translations from request data.
+     * 
+     * @param Event $event
+     * @param ArrayObject $data
+     * @param \MenuManager\Model\Table\Arraybject $options
+     */
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    {
+        $translations = array_key_exists('_translations', $data) ? $data['_translations'] : [];
+        foreach ($translations as $lang => $translation) {
+            if ($translation['title'] === '') {
+                unset($data['_translations'][$lang]);
+            }
+        }
     }
 }
