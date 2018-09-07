@@ -44,6 +44,7 @@ class MenuLinksTable extends Table
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Tree');
+        $this->addBehavior('Translate', ['fields' => ['title']]);
 
         $this->belongsTo('Menus', [
             'foreignKey' => 'menu_id',
