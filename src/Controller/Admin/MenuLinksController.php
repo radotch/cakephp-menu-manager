@@ -177,4 +177,17 @@ class MenuLinksController extends AppController
         
         $this->set('menuLinksGroups', $menuLinksGroups);
     }
+    
+    /**
+     * 
+     * @param string $id 
+     */
+    public function translations(string $id)
+    {
+        $menuLink = $this->MenuLinks->get($id, [
+            'finder' => 'translations'
+        ]);
+        
+        $this->set('menuLink', $menuLink);
+    }
 }
