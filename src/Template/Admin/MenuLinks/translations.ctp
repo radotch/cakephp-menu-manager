@@ -25,8 +25,8 @@
 <div class="menuLinks view large-9 medium-8 columns content">
     <h3><?= __('Menu Link Translations') ?></h3>
     
-    <div class="related">
-        <h4><?= __('Menu Link') ?></h4>
+    <div class="">
+        <p class="subheader lead"><?= __('Menu Link') ?></p>
         <div>
             <?= $this->Html->link($menuLink->title, ['action' => 'view', $menuLink->id]) ?>
         </div>
@@ -46,7 +46,7 @@
                 <td><?= h($translation->locale) ?></td>
                 <td><?= h($translation->title) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'MenuLinks', 'action' => 'editTranslation']) ?>
+                    <?= $this->Html->link(__('Edit'), ['controller' => 'MenuLinks', 'action' => 'translationEdit', $menuLink->id, $locale]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

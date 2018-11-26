@@ -190,4 +190,40 @@ class MenuLinksController extends AppController
         
         $this->set('menuLink', $menuLink);
     }
+    
+    /**
+     * 
+     * 
+     * @param string $id Menu Link id
+     * @param string $locale Locale about translation
+     * @return void|\Cake\Http\Client\Response 
+     */
+    public function translationEdit(string $id, string $locale)
+    {
+        $menuLink = $this->MenuLinks->get($id, [
+            'finder' => 'translations',
+            'locales' => $locale
+        ]);
+        
+        if (empty($menuLink->_translations)) {
+            $this->Flash->error(__('The Translation Not Found'));
+            
+            return $this->redirect(['action' => 'translations', $menuLink->id]);
+        }
+        
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $menuLink = $this->MenuLinks->patchEntity($menuLink, $this->request->getData());
+            
+            if ($this->MenuLinks->save($menuLink)) {
+                $this->Flash->success(__('The Translation was updated successful.'));
+                
+                return $this->redirect(['action' => 'translations', $menuLink->id]);
+            }
+            
+            $this->Flash->error(__('The Translation update failed.'));
+        }
+        
+        $this->set('locale', $locale);
+        $this->set('menuLink', $menuLink);
+    }
 }
