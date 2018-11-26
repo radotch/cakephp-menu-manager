@@ -179,6 +179,7 @@ class MenuLinksController extends AppController
     }
     
     /**
+     * Get MenuLink entity with translations.
      * 
      * @param string $id 
      */
@@ -192,7 +193,8 @@ class MenuLinksController extends AppController
     }
     
     /**
-     * 
+     * Method get MenuLink entity with translation by passed language (locale)
+     * and save it after edit.
      * 
      * @param string $id Menu Link id
      * @param string $locale Locale about translation
