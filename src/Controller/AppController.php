@@ -8,13 +8,13 @@ use Cake\Core\Configure;
 class AppController extends BaseController
 {
     /**
-     * Read translation locales from Configuration.
+     * Read translation Languages from Configuration.
      * 
-     * @return array Array with locales or empty array. 
+     * @return array Array with languages or empty array. 
      */
     protected function _getTranslationLocales()
     {
-        $translationLocales = Configure::read('Translation.locales', []);
+        $translationLocales = Configure::read('MenuManager.Translation.Languages', []);
         
         return $translationLocales;
     }
