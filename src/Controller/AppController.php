@@ -10,12 +10,13 @@ class AppController extends BaseController
     /**
      * Read translation Languages from Configuration.
      * 
+     * $param none
      * @return array Array with languages or empty array. 
      */
-    protected function _getTranslationLocales()
+    protected function _getTranslationLanguages()
     {
-        $translationLocales = Configure::read('MenuManager.Translation.Languages', []);
+        $languages = Configure::read('MenuManager.Translation.Languages', []);
         
-        return $translationLocales;
+        return $languages;
     }
 }
