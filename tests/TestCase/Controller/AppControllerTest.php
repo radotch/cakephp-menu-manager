@@ -36,7 +36,7 @@ class AppControllerTest extends IntegrationTestCase
     {
         $this->get('/admin/menu-manager');
         
-        $this->assertTrue(Configure::check('MenuManager.Translation.Languages'), __('Configuration MenuManager.Translation.Languages is missing'));
+        $this->assertTrue(Configure::check('MenuManager.Translation.Languages'), __('Configuration MenuManager.Translation.Languages is missing.'));
     }
     
     /**
@@ -46,7 +46,7 @@ class AppControllerTest extends IntegrationTestCase
      * @param none
      * @return void
      */
-    public function test_getTransaltionLanguagesWhenConfigDoesNotExists()
+    public function test_getTransaltionLanguagesMethodReturnEmptyArrayWhenConfigDoesNotExists()
     {
         $method = new \ReflectionMethod(AppController::class, '_getTranslationLanguages');
         $method->setAccessible(TRUE);
@@ -54,7 +54,7 @@ class AppControllerTest extends IntegrationTestCase
         $this->get('/admin/menu-manager');
         // Ensure that configuration does not exists
         Configure::delete('MenuManager.Translation.Languages');
-        $this->assertFalse(Configure::check('MenuManager.Translation.Languages'), __('Config variable must not exists for this test'));
+        $this->assertFalse(Configure::check('MenuManager.Translation.Languages'), __('Config variable must not exists for this test.'));
         
         $appController = new AppController();
         $languages = $method->invoke($appController);
