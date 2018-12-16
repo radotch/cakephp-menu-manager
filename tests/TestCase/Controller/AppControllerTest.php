@@ -40,6 +40,17 @@ class AppControllerTest extends IntegrationTestCase
     }
     
     /**
+     * Test if method _getTranslationLanguages() exists.
+     * 
+     * @param none
+     * @return void
+     */
+    public function test_getTranslationLanguagesMethodExists()
+    {
+        $this->assertTrue(method_exists(AppController::class, '_getTranslationLanguages'), __('Method _getTranslationLanguages() does not exists in MemuManager\AppController.php'));
+    }
+    
+    /**
      * Test protected method when Translation Configuration does not exists.
      * Expect method to return empty array.
      * 
