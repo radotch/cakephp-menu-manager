@@ -24,7 +24,7 @@ class Plugin extends BasePlugin
      * @param array $languages Language list
      * @return $this 
      */
-    public function setTranslatons(array $languages = [])
+    public function setTranslations(array $languages = [])
     {
         Configure::write('MenuManager.Translation.Languages', $languages);
         
