@@ -9,6 +9,7 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li class="divider"></li>
+        <li><?= $this->Html->link(__('Translate Menu'), ['action' => 'translate', $menu->id]) ?> </li>
         <li><?= $this->Html->link(__('Edit Menu'), ['action' => 'edit', $menu->id]) ?> </li>
         <li><?= $this->Form->postLink(__('Delete Menu'), ['action' => 'delete', $menu->id], ['confirm' => __('Are you sure you want to delete # {0}?', $menu->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Menus'), ['action' => 'index']) ?> </li>
