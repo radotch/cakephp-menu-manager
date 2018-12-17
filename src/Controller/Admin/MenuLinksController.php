@@ -9,7 +9,7 @@ use MenuManager\Controller\AppController;
  * @property \MenuManager\Model\Table\MenuLinksTable $MenuLinks
  *
  * @method \MenuManager\Model\Entity\MenuLink[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- * @method AppController _getTranslationLocales()
+ * @method AppController _getTranslationLanguages()
  */
 class MenuLinksController extends AppController
 {
@@ -65,7 +65,7 @@ class MenuLinksController extends AppController
         
         $menus = $this->MenuLinks->Menus->find('list', ['limit' => 200]);
         $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', ['spacer' => '-- ']);
-        $translationLocales = $this->_getTranslationLocales();
+        $translationLocales = $this->_getTranslationLanguages();
         
         $this->set(compact('menuLink', 'menus', 'parentMenuLinks', 'translationLocales'));
     }
@@ -94,7 +94,7 @@ class MenuLinksController extends AppController
         
         $menus = $this->MenuLinks->Menus->find('list', ['limit' => 200]);
         $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', ['spacer' => '-- ']);
-        $translationLocales = $this->_getTranslationLocales();
+        $translationLocales = $this->_getTranslationLanguages();
         
         $this->set(compact('menuLink', 'menus', 'parentMenuLinks', 'translationLocales'));
     }
@@ -156,7 +156,7 @@ class MenuLinksController extends AppController
             'spacer' => '-- ',
             'conditions' => ['menu_id' => $menuId]
         ]);
-        $translationLocales = $this->_getTranslationLocales();
+        $translationLocales = $this->_getTranslationLanguages();
         
         $this->set(compact('menuLink', 'menus', 'parentMenuLinks', 'translationLocales'));
         
