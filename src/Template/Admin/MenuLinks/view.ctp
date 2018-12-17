@@ -76,9 +76,9 @@
             <tbody>
                 <?php foreach ($menuLink->_translations as $locale => $translation): ?>
                 <tr>
-                    <td><?= Locale::getDisplayLanguage($language) ?></td>
+                    <td><?= Locale::getDisplayLanguage($locale) ?></td>
                     <td><?= $translation->title ?></td>
-                    <td><?= $this->Html->link(__('Edit', ['action' => 'editTranslation', $menuLink->id])) ?></td>
+                    <td><?= $this->Html->link(__('Edit'), ['action' => 'editTranslation', $menuLink->id]) ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
