@@ -78,7 +78,7 @@
                 <tr>
                     <td><?= Locale::getDisplayLanguage($locale) ?></td>
                     <td><?= $translation->title ?></td>
-                    <td><?= $this->Html->link(__('Edit'), ['action' => 'translationEdit', $menuLink->id]) ?></td>
+                    <td><?= $this->Html->link(__('Edit'), ['action' => 'translationEdit', $menuLink->id, $locale]) ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
