@@ -45,9 +45,9 @@
         </tr>
     </table>
     
-    <div class="related">
+    <div id="translations" class="related">
         <h4><?= __('Related Translations') ?></h4>
-        <div class="translations">
+        <div class="translations-wrapper">
             <?php if (!empty($menu->_translations)): ?>
                 <table>
                     <tr>
