@@ -9,8 +9,9 @@
         <li class="heading"><?= __('Actions') ?></li>
         <li class="divider"></li>
         <li><?= $this->Html->link(__('Edit Menu Link'), ['action' => 'edit', $menuLink->id]) ?></li>
-        <li><?= $this->Form->postLink(__('Delete Menu Link'), ['action' => 'delete', $menuLink->id], ['confirm' => __('Are you sure you want to delete # {0}?', $menuLink->id)]) ?> </li>
+        <li><?= $this->Html->link(__('Add Child Link'), ['action' => 'add', $menuLink->menu_id, $menuLink->id]) ?></li>
         <li><?= $this->Html->link(__('Translate Menu Link'), ['action' => 'translate', $menuLink->id]) ?></li>
+        <li><?= $this->Form->postLink(__('Delete Menu Link'), ['action' => 'delete', $menuLink->id], ['confirm' => __('Are you sure you want to delete # {0}?', $menuLink->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Parent Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('List Child Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?> </li>
         <li class="divider"></li>
@@ -63,6 +64,27 @@
             <td><?= $menuLink->is_active ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>
+    <div class="related">
+        <h4><?= __('Related Menu Link Translations') ?></h4>
+        <?php if (count($menuLink->_translations) > 0): ?>
+        <table>
+            <tr>
+                <th><?= __('Language') ?></th>
+                <th><?= __('Title') ?></th>
+                <th><?= __('Actions') ?></th>
+            </tr>
+            <tbody>
+                <?php foreach ($menuLink->_translations as $locale => $translation): ?>
+                <tr>
+                    <td><?= Locale::getDisplayLanguage($language) ?></td>
+                    <td><?= $translation->title ?></td>
+                    <td><?= $this->Html->link(__('Edit', ['action' => 'editTranslation', $menuLink->id])) ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php endif; ?>
+    </div>
     <div class="related">
         <h4><?= __('Related Menu Links') ?></h4>
         <p class="subheader" style="margin-top: -0.75rem; margin-bottom: 1.5rem;"><?= __('(Only direct children)')  ?></p>

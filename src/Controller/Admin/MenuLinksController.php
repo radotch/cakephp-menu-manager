@@ -23,7 +23,8 @@ class MenuLinksController extends AppController
     public function view($id = null)
     {
         $menuLink = $this->MenuLinks->get($id, [
-            'contain' => ['Menus', 'ParentMenuLinks', 'ChildMenuLinks']
+            'contain' => ['Menus', 'ParentMenuLinks', 'ChildMenuLinks'],
+            'finder' => 'translations'
         ]);
 
         $this->set('menuLink', $menuLink);
