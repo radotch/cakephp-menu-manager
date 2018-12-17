@@ -49,12 +49,12 @@ class MenuI18nFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
-                'locale' => 'Lorem i',
-                'model' => 'Lorem ipsum dolor sit amet',
+//                'id' => 1,
+                'locale' => 'br_BR',
+                'model' => 'Menus',
                 'foreign_key' => 1,
-                'field' => 'Lorem ipsum dolor sit amet',
-                'content' => 'Lorem ipsum dolor sit amet'
+                'field' => 'title',
+                'content' => 'Brazilian Menu title'
             ],
         ];
         parent::init();
