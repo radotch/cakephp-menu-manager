@@ -10,9 +10,6 @@
         <li class="divider"></li>
         <li><?= $this->Html->link(__('View Menu'), ['action' => 'view', $menu->id]) ?></li>
         <li><?= $this->Html->link(__('List Menus'), ['action' => 'index']) ?></li>
-        <li class="divider"></li>
-        <li><?= $this->Html->link(__('List Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Menu Link'), ['controller' => 'MenuLinks', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="menus form large-9 medium-8 columns content">

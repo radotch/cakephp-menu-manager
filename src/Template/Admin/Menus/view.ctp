@@ -9,15 +9,12 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li class="divider"></li>
-        <li><?= $this->Html->link(__('Add Menu Link'), ['controller' => 'MenuLinks', 'action' => 'addTo', $menu->id, NULL]) ?> </li>
+        <li><?= $this->Html->link(__('Add Menu Link'), ['controller' => 'MenuLinks', 'action' => 'add', $menu->id, NULL]) ?> </li>
         <li><?= $this->Html->link(__('Translate Menu'), ['action' => 'translate', $menu->id]) ?> </li>
         <li><?= $this->Html->link(__('Edit Menu'), ['action' => 'edit', $menu->id]) ?> </li>
         <li><?= $this->Form->postLink(__('Delete Menu'), ['action' => 'delete', $menu->id], ['confirm' => __('Are you sure you want to delete # {0}?', $menu->id)]) ?> </li>
         <li><?= $this->Html->link(__('List Menus'), ['action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Menu'), ['action' => 'add']) ?> </li>
-        <li class="divider"></li>
-        <li><?= $this->Html->link(__('List Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('Add Menu Link'), ['controller' => 'MenuLinks', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="menus view large-9 medium-8 columns content">
