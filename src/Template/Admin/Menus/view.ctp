@@ -9,6 +9,7 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li class="divider"></li>
+        <li><?= $this->Html->link(__('Add Menu Link'), ['controller' => 'MenuLinks', 'action' => 'addTo', $menu->id, NULL]) ?> </li>
         <li><?= $this->Html->link(__('Translate Menu'), ['action' => 'translate', $menu->id]) ?> </li>
         <li><?= $this->Html->link(__('Edit Menu'), ['action' => 'edit', $menu->id]) ?> </li>
         <li><?= $this->Form->postLink(__('Delete Menu'), ['action' => 'delete', $menu->id], ['confirm' => __('Are you sure you want to delete # {0}?', $menu->id)]) ?> </li>
@@ -43,16 +44,35 @@
             <td><?= h($menu->modified) ?></td>
         </tr>
     </table>
+    
+    <div class="related">
+        <h4><?= __('Related Translations') ?></h4>
+        <div class="translations">
+            <?php if (!empty($menu->_translations)): ?>
+                <table>
+                    <tr>
+                        <th><?= __('Language') ?></th>
+                        <th><?= __('Title') ?></th>
+                        <th><?= __('Actions') ?></th>
+                    </tr>
+                    <?php foreach ($menu->_translations as $language => $translation): ?>
+                    <tr>
+                        <td><?= Locale::getDisplayLanguage($language) ?></td>
+                        <td><?= $translation->title ?></td>
+                        <td class="actions">
+                            <?= $this->Html->link(__('Edit'), ['action' => 'editTranslation', $menu->id, $translation->locale], []) ?>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php endif; ?>
+        </div>
+    </div>
+    
     <div class="related">
         <h4><?= __('Related Menu Links') ?></h4>
         <div>
             <?php
-            echo $this->Html->link(
-                    __('Add Menu Link'),
-                    ['controller' => 'MenuLinks', 'action' => 'addTo', $menu->id, NULL],
-                    ['class' => 'button small secondary']
-                );
-            echo '&nbsp;';
             echo $relatedLinksPreview === 'list' ?
                     $this->Html->link(__('View as Tree'), ['action' => 'view', $menu->id, '?' => ['related_links_preview' => 'tree']], ['class' => 'button small warning']) :
                     $this->Html->link(__('View as List'), ['action' => 'view', $menu->id], ['class' => 'button small secondary']);
