@@ -41,7 +41,9 @@ class MenusController extends AppController
         $menu = $this->Menus->get($id, [
             'contain' => [
                 'MenuLinks' => ['finder' => $menuLinksFinder],
-                'MenuLinks.ParentMenuLinks']
+                'MenuLinks.ParentMenuLinks'
+            ],
+            'finder' => 'translations'
         ]);
 
         $this->set('menu', $menu);
@@ -120,15 +122,16 @@ class MenusController extends AppController
      * Save Menu Translation on POST request.
      * To be able to save Translation method set access to _locale property
      * which is used in Translate behavior according CakePHP documentation.
+     * Also the method check are there translations about all supported languages.
+     * If TRUE return to the menu preview.
      * 
-     * @see 
      * 
      * @param string $id
      * @return \Cake\Http\Response
      */
     public function translate(string $id)
     {
-        $menu = $this->Menus->get($id);
+        $menu = $this->Menus->get($id, ['finder' => 'translations']);
         
         if ($this->request->is(['patch', 'put', 'post'])) {
             $menu->setAccess('_locale', TRUE);
@@ -143,7 +146,43 @@ class MenusController extends AppController
             $this->Flash->error(__('Failed to save translation. Please, try again.'));
         }
         
-        $languages = $this->_getTranslationLanguages();
+        $translationLanguages = $this->_getTranslationLanguages();
+        $translations = $menu->_translations;
+        
+        $languages = array_diff_key($translationLanguages, $translations);
+        if (count($languages) === 0) {
+            $this->Flash->success(__('There are translations about all supported languages.'));
+            
+            return $this->redirect(['action' => 'view', $menu->id]);
+        }
+        
+        $this->set(compact('menu', 'languages'));
+    }
+    
+    /**
+     * Get Menu by id and its translation about language by locale.
+     * After data edit save it.
+     * 
+     * @param string $id Menu id.
+     * @param string $locale Translation locale
+     */
+    public function editTranslation(string $id, string $locale)
+    {
+        $this->Menus->setLocale($locale);
+        $menu = $this->Menus->get($id, []);
+        
+        if ($this->request->is(['patch', 'put', 'post'])) {
+            $menu = $this->Menus->patchEntity($menu, $this->request->getData());
+            if ($this->Menus->save($menu)) {
+                $this->Flash->success(__('Menu Translation was updated.'));
+                
+                return $this->redirect(['action' => 'view', $menu->id]);
+            }
+            
+            $this->Flash->error(__('Menu Translation update faied. Please, try again.'));
+        }
+        
+        $languages = array_filter($this->_getTranslationLanguages(), function ($key) use ($locale) { return $key === $locale; }, ARRAY_FILTER_USE_KEY);
         $this->set(compact('menu', 'languages'));
     }
 }
