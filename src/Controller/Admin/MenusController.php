@@ -9,7 +9,7 @@ use MenuManager\Controller\AppController;
  * @property \MenuManager\Model\Table\MenusTable $Menus
  *
  * @method \MenuManager\Model\Entity\Menu[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- * @method AppController _getTranslationLocales()
+ * @method AppController _getTranslationLanguages()
  */
 class MenusController extends AppController
 {
@@ -113,5 +113,37 @@ class MenusController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    
+    /**
+     * Get Menu by id.
+     * Save Menu Translation on POST request.
+     * To be able to save Translation method set access to _locale property
+     * which is used in Translate behavior according CakePHP documentation.
+     * 
+     * @see 
+     * 
+     * @param string $id
+     * @return \Cake\Http\Response
+     */
+    public function translate(string $id)
+    {
+        $menu = $this->Menus->get($id);
+        
+        if ($this->request->is(['patch', 'put', 'post'])) {
+            $menu->setAccess('_locale', TRUE);
+            $menu = $this->Menus->patchEntity($menu, $this->request->getData('translation'));
+            
+            if ($this->Menus->save($menu)) {
+                $this->Flash->success(__('The translation of Menu was saved successful.'));
+                
+                return $this->redirect(['action' => 'view', $menu->id]);
+            }
+            
+            $this->Flash->error(__('Failed to save translation. Please, try again.'));
+        }
+        
+        $languages = $this->_getTranslationLanguages();
+        $this->set(compact('menu', 'languages'));
     }
 }
