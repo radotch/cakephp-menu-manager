@@ -66,13 +66,6 @@
     <div class="related">
         <h4><?= __('Related Menu Links') ?></h4>
         <p class="subheader" style="margin-top: -0.75rem; margin-bottom: 1.5rem;"><?= __('(Only direct children)')  ?></p>
-        <div>
-            <?= $this->Html->link(
-                __('Add Child Menu Link'),
-                ['controller' => 'MenuLinks', 'action' => 'add', $menuLink->menu_id, $menuLink->id],
-                ['class' => 'button tiny secondary']
-            ) ?>
-        </div>
         
         <?php if (!empty($menuLink->child_menu_links)): ?>
         <table cellpadding="0" cellspacing="0">
