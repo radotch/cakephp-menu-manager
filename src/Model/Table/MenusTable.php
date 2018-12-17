@@ -42,7 +42,10 @@ class MenusTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
-         $this->addBehavior('Translate', ['fields' => ['title']]);
+        $this->addBehavior('Translate', [
+            'fields' => ['title'],
+            'translationTable' => 'MenuManager.MenuI18n'
+        ]);
 
         $this->hasMany('MenuLinks', [
             'foreignKey' => 'menu_id',
