@@ -10,17 +10,12 @@
         <li class="divider"></li>
         <li><?= $this->Html->link(__('Edit Menu Link'), ['action' => 'edit', $menuLink->id]) ?></li>
         <li><?= $this->Form->postLink(__('Delete Menu Link'), ['action' => 'delete', $menuLink->id], ['confirm' => __('Are you sure you want to delete # {0}?', $menuLink->id)]) ?> </li>
-        <li><?= $this->Html->link(__('Translations preview'), ['action' => 'translations', $menuLink->id]) ?></li>
-        <li><?= $this->Html->link(__('List Menu Links'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Menu Link'), ['action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('Translate Menu Link'), ['action' => 'translate', $menuLink->id]) ?></li>
+        <li><?= $this->Html->link(__('List Parent Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('List Child Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?> </li>
         <li class="divider"></li>
         <li><?= $this->Html->link(__('List Menus'), ['controller' => 'Menus', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Menu'), ['controller' => 'Menus', 'action' => 'add']) ?> </li>
-        <li class="divider"></li>
-        <li><?= $this->Html->link(__('List Parent Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Parent Menu Link'), ['controller' => 'MenuLinks', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Child Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Child Menu Link'), ['controller' => 'MenuLinks', 'action' => 'addTo', $menuLink->menu_id, $menuLink->id]) ?> </li>
+        <li><?= $this->Html->link(__('Back to Menu'), ['controller' => 'Menus', 'action' => 'view', $menuLink->menu_id]) ?> </li>
     </ul>
 </nav>
 <div class="menuLinks view large-9 medium-8 columns content">
@@ -73,9 +68,9 @@
         <p class="subheader" style="margin-top: -0.75rem; margin-bottom: 1.5rem;"><?= __('(Only direct children)')  ?></p>
         <div>
             <?= $this->Html->link(
-                __('Add New Child Menu Link'),
-                ['controller' => 'MenuLinks', 'action' => 'addTo', $menuLink->menu_id, $menuLink->id],
-                ['class' => 'button small secondary']
+                __('Add Child Menu Link'),
+                ['controller' => 'MenuLinks', 'action' => 'add', $menuLink->menu_id, $menuLink->id],
+                ['class' => 'button tiny secondary']
             ) ?>
         </div>
         
