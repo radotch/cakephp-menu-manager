@@ -165,16 +165,45 @@ class MenuLinksController extends AppController
     
     /**
      * Get MenuLink entity with translations.
+     * Filter translation languages to all that Menu Link is not translated.
+     * When save Menu Link data, on success redirect to Menu Link preview.
+     * The method do the same when Menu Link has translations about all supported
+     * languages.
      * 
-     * @param string $id 
+     * @param string $id Menu Link id
+     * @return \Cake\Http\Response|\Cake\View\View
      */
-    public function translations(string $id)
+    public function translate(string $id)
     {
         $menuLink = $this->MenuLinks->get($id, [
             'finder' => 'translations'
         ]);
         
-        $this->set('menuLink', $menuLink);
+        if ($this->request->is(['patch', 'put', 'post'])) {
+            $this->request = $this->request->withData('translation.menu_id', $menuLink->menu_id);
+            $menuLink->setAccess('_locale', TRUE);
+            $menuLink = $this->MenuLinks->patchEntity($menuLink, $this->request->getData('translation'));
+            
+            if ($this->MenuLinks->save($menuLink)) {
+                $this->Flash->success(__('Menu Link Translation was saved successful.'));
+                
+                return $this->redirect(['action' => 'view', $menuLink->id]);
+            }
+            
+            $this->Flash->error(__('Menu Link Translation failed to save. Please, try again.'));
+            
+        }
+        
+        $translationLanguages = $this->_getTranslationLanguages();
+        $languages = array_diff_key($translationLanguages, $menuLink->_translations);
+        
+        if (count($languages) === 0) {
+            $this->Flash->success(__('Menu Link "{0}" has translations about all supported languages.', $menuLink->title));
+            
+            return $this->redirect(['action' => 'view', $menuLink->id]);
+        }
+        
+        $this->set(compact('menuLink', 'languages'));
     }
     
     /**
