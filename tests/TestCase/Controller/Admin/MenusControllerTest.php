@@ -19,7 +19,6 @@ use MenuManager\Model\Table\MenusTable;
  */
 class MenusControllerTest extends IntegrationTestCase
 {
-
     /**
      * Fixtures
      *
@@ -27,7 +26,8 @@ class MenusControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'plugin.menu_manager.menus',
-        'plugin.menu_manager.menu_links'
+        'plugin.menu_manager.menu_links',
+        'plugin.menu_manager.menu_i18n'
     ];
     
     /**
@@ -515,5 +515,212 @@ class MenusControllerTest extends IntegrationTestCase
         $this->expectException(RecordNotFoundException::class);
         
         $this->post('/admin/menu-manager/menus/delete/' . $menuId);
+    }
+    
+    /**
+     * Test translate() method on GET request
+     * 
+     * @param none
+     * @return void
+     */
+    public function testAdminTranslate()
+    {
+        $this->get('/admin/menu-manager/menus/translate/1');
+        
+        $this->assertResponseOk();
+        $this->assertNoRedirect(__('Method MUST NOT redirect on GET request.'));
+    }
+    
+    /**
+     * Test that method rise Exception when record not found
+     * 
+     * @param none
+     * @return void
+     */
+    public function testAdminTranslateRiseExeptionWhenRecordNotFound()
+    {
+        $this->disableErrorHandlerMiddleware();
+        $this->expectException(RecordNotFoundException::class);
+        
+        $this->get('/admin/menu-manager/menus/translate/999999');
+    }
+    
+    /**
+     * Test view variable $menu in translate() method.
+     * 
+     * @param none
+     * @return void
+     */
+    public function testAdminTranslateViewvariableMenu()
+    {
+        $this->get('/admin/menu-manager/menus/translate/1');
+        
+        $menu = $this->viewVariable('menu');
+        
+        $this->assertNotNull($menu, __('View variable $menu is not passed.'));
+        $this->assertInstanceOf(Menu::class, $menu, __('Wrong type of $menu variable. Expected type is {0}', Menu::class));
+    }
+    
+    /**
+     * Test view variable $menu in translate() method.
+     * 
+     * @param none
+     * @return void
+     */
+    public function testAdminTranslateViewVariableLanguages()
+    {
+        $this->get('/admin/menu-manager/menus/translate/1');
+        
+        $languages = $this->viewVariable('languages');
+        
+        $this->assertNotNull($languages, __('View variable $languages is not passed.'));
+        $this->assertTRUE(is_array($languages), __('Wrong type of $menu variable. Expects array, passed {0}', gettype($languages)));
+    }
+    
+    /**
+     * 
+     * 
+     * @param none
+     * @return void
+     */
+    public function testAdminTranslateViewVariableLanguagesContainsOnlyMissingTranslationLanguages()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+    
+    /**
+     * Test to add Menu Translation
+     * 
+     * @param none
+     * @return void
+     */
+    public function testAdminTranslatePostData()
+    {
+        $data = [
+            '_locale' => 'bg',
+            'title' => 'Bulgarian tile'
+        ];
+        
+        $menu = $this->Menus->get(1, ['finder' => 'translations']);
+        $this->assertFalse(array_key_exists($data['_locale'], $menu->_translations), __('Translation about tested menu exists before save.'));
+        
+        $this->post('/admin/menu-manager/menus/translate/1', $data);
+        
+        $menu = $this->Menus->get(1, ['finder' => 'translations']);
+        $this->assertFalse(array_key_exists($data['_locale'], $menu->_translations), __('Translation about tested menu is missing after save.'));
+    }
+    
+    /**
+     * 
+     * 
+     * @param none
+     * @return void
+     */
+    public function testAdminTranslatePostRedirect()
+    {
+        $this->markTestIncomplete('Not implemented yet.');   
+    }
+    
+    /**
+     * 
+     * 
+     * @param none
+     * @return void
+     */
+    public function testAdminEditTranslation()
+    {
+        $this->get('/admin/menu-manager/menus/edit-translation/1/br_BR');
+        
+        $this->assertResponseOk();
+        $this->assertNoRedirect();
+    }
+    
+    /**
+     * 
+     * 
+     * @param none
+     * @return void
+     */
+    public function testAdminEditTranslationWhenTranslationNotFound()
+    {
+        $this->get('/admin/menu-manager/menus/edit-translation/1/br_BR');
+        
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+    
+    /**
+     * 
+     */
+    public function testAdminEditTranslationViewVariableMenu()
+    {
+        $this->get('/admin/menu-manager/menus/edit-translation/1/br_BR');
+        
+        $menu = $this->viewVariable('menu');
+        
+        $this->assertNotNull($menu, __('View variable $menu is missing.'));
+        $this->assertInstanceOf(Menu::class, $menu);
+    }
+    
+    /**
+     * 
+     * @param none
+     * @return void
+     */
+    public function testAdminEditTranslationViewVariableMenuHaveLocaleField()
+    {
+        $this->get('/admin/menu-manager/menus/edit-translation/1/br_BR');
+        
+        $menu = $this->viewVariable('menu');
+        
+        $this->assertTrue($menu->has('_locale'), __('Missing field _locale'));
+    }
+    
+    /**
+     * 
+     * 
+     * @param none
+     * @return void
+     */
+    public function testAdminEditTranslationViewVariableLanguages()
+    {
+        $this->get('/admin/menu-manager/menus/edit-translation/1/br_BR');
+        
+        $languages = $this->viewVariable('languages');
+        
+        $this->assertNotNull($languages);
+        $this->assertTrue(is_array($languages), __('Expect $Languages as array, but get {0}', gettype($languages)));
+    }
+    
+    /**
+     * 
+     * 
+     * @param none
+     * @return void
+     */
+    public function testAdminEditTranslationViewVariableLanguagesContainsOnlyTranslationLanguage()
+    {
+        $this->markTestIncomplete('Not imaplemented yet.');
+    }
+    
+    /**
+     * 
+     * 
+     * @param none
+     * @return void
+     */
+    public function testAdminEditTranslationViewPostData()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+    
+    /**
+     * 
+     * 
+     * @param none
+     * @return void
+     */
+    public function testAdminEditTranslationViewPostDataSaveAndRedirect()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
     }
 }
