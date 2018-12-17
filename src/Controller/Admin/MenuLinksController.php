@@ -14,7 +14,7 @@ use MenuManager\Controller\AppController;
 class MenuLinksController extends AppController
 {
     /**
-     * View method
+     * Get Menu Link by id.
      *
      * @param string|null $id Menu Link id.
      * @return \Cake\Http\Response|void
@@ -71,16 +71,16 @@ class MenuLinksController extends AppController
             if ($this->MenuLinks->save($menuLink)) {
                 $this->Flash->success(__('The menu link has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'Menus', 'action' => 'view', $menuLink->menu_id]);
             }
             $this->Flash->error(__('The menu link could not be saved. Please, try again.'));
         }
         
-        $menus = $this->MenuLinks->Menus->find('list', ['limit' => 200]);
-        $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', ['spacer' => '-- ']);
-        $translationLocales = $this->_getTranslationLanguages();
+        $menus = $this->MenuLinks->Menus->find('list', ['limit' => 200])->where(['id' => $menuLink->menu_id]);
+        $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', ['spacer' => '-- '])
+                ->where(['menu_id' => $menuLink->menu_id]);
         
-        $this->set(compact('menuLink', 'menus', 'parentMenuLinks', 'translationLocales'));
+        $this->set(compact('menuLink', 'menus', 'parentMenuLinks'));
     }
 
     /**
