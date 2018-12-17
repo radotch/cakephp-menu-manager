@@ -26,20 +26,6 @@ class MenuSeed extends AbstractSeed
                 'created' => '2018-06-30 21:51:40',
                 'modified' => '2018-06-30 21:51:40',
             ],
-            [
-//                'id' => '2',
-                'title' => 'Top menu',
-                'alias' => 'top-menu',
-                'created' => '2018-06-30 21:51:56',
-                'modified' => '2018-06-30 21:52:06',
-            ],
-            [
-//                'id' => '3',
-                'title' => 'Footer menu',
-                'alias' => 'footer-menu',
-                'created' => '2018-06-30 21:52:59',
-                'modified' => '2018-06-30 21:54:00',
-            ],
         ];
 
         $table = $this->table('menus');
