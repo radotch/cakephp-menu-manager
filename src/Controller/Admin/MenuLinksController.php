@@ -13,22 +13,6 @@ use MenuManager\Controller\AppController;
  */
 class MenuLinksController extends AppController
 {
-
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Menus', 'ParentMenuLinks']
-        ];
-        $menuLinks = $this->paginate($this->MenuLinks);
-
-        $this->set(compact('menuLinks'));
-    }
-
     /**
      * View method
      *
