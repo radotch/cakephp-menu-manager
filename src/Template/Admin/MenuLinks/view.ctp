@@ -8,7 +8,7 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li class="divider"></li>
-        <li><?= $this->Html->link(__('Edit Menu Link'), ['action' => 'edit', $menuLink->id]) ?></li>
+        <li><?= $this->Html->link(__('Edit Menu Link'), ['action' => 'edit', $menuLink->id, $menuLink->parent_id]) ?></li>
         <li><?= $this->Html->link(__('Add Child Link'), ['action' => 'add', $menuLink->menu_id, $menuLink->id]) ?></li>
         <li><?= $this->Html->link(__('Translate Menu Link'), ['action' => 'translate', $menuLink->id]) ?></li>
         <li><?= $this->Form->postLink(__('Delete Menu Link'), ['action' => 'delete', $menuLink->id], ['confirm' => __('Are you sure you want to delete # {0}?', $menuLink->id)]) ?> </li>
@@ -16,7 +16,7 @@
         <li><?= $this->Html->link(__('List Child Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?> </li>
         <li class="divider"></li>
         <li><?= $this->Html->link(__('List Menus'), ['controller' => 'Menus', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('Back to Menu'), ['controller' => 'Menus', 'action' => 'view', $menuLink->menu_id]) ?> </li>
+        <li><?= $this->Html->link(__('View Menu'), ['controller' => 'Menus', 'action' => 'view', $menuLink->menu_id]) ?> </li>
     </ul>
 </nav>
 <div class="menuLinks view large-9 medium-8 columns content">

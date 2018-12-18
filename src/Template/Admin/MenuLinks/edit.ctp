@@ -21,7 +21,7 @@
         <li><?= $this->Html->link(__('List Children Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?></li>
         <li class="divider"></li>
         <li><?= $this->Html->link(__('List Menus'), ['controller' => 'Menus', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('Back to Menu'), ['controller' => 'Menus', 'action' => 'view', $menuLink->menu_id]) ?></li>
+        <li><?= $this->Html->link(__('View Menu'), ['controller' => 'Menus', 'action' => 'view', $menuLink->menu_id]) ?></li>
     </ul>
 </nav>
 <div class="menuLinks form large-9 medium-8 columns content">
