@@ -48,7 +48,7 @@ class MenuLinksController extends AppController
             if ($this->MenuLinks->save($menuLink)) {
                 $this->Flash->success(__('The menu link has been saved.'));
 
-                return $this->redirect(['action' => 'view', $menuLink->id]);
+                return $this->redirect(['controller' => 'Menus', 'action' => 'view', $menuLink->menu_id]);
             }
             $this->Flash->error(__('The menu link could not be saved. Please, try again.'));
         }
