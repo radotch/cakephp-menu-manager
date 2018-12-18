@@ -9,13 +9,7 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li class="divider"></li>
-        <li><?= $this->Html->link(__('List Menu Links'), ['action' => 'index']) ?></li>
-        <li class="divider"></li>
         <li><?= $this->Html->link(__('List Menus'), ['controller' => 'Menus', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Menu'), ['controller' => 'Menus', 'action' => 'add']) ?></li>
-        <li class="divider"></li>
-        <li><?= $this->Html->link(__('List Parent Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Parent Menu Link'), ['controller' => 'MenuLinks', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="menuLinks form large-9 medium-8 columns content">
@@ -31,20 +25,6 @@
         echo $this->Form->control('is_active');
         ?>
     </fieldset>
-
-    <?php if (!empty($translationLocales)): ?>
-    <h4><?= __('Menu Link Translations') ?></h4>
-        <?php foreach ($translationLocales as $locale): ?>
-            <fieldset>
-                <legend><?= Locale::getDisplayName($locale) ?></legend>
-                    <?= $this->Form->control('_translations.' . $locale . '.title', [
-                        'required' => false,
-                        'label' => __('Title')
-                    ]) ?>
-            </fieldset>
-        <?php endforeach; ?>
-    <?php endif; ?>
-
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>
