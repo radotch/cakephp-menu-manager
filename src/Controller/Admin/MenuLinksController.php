@@ -31,13 +31,18 @@ class MenuLinksController extends AppController
     }
 
     /**
-     * Add method
-     *
+     * Add Menu Link to Menu.
+     * 
+     * @param int $menuId
+     * @param int|NULL $parentLinkId
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(int $menuId, int $parentLinkId = NULL)
     {
         $menuLink = $this->MenuLinks->newEntity();
+        $menuLink->menu_id = $menuId;
+        $menuLink->parent_id = $parentLinkId;
+        
         if ($this->request->is('post')) {
             $menuLink = $this->MenuLinks->patchEntity($menuLink, $this->request->getData());
             if ($this->MenuLinks->save($menuLink)) {
@@ -49,10 +54,10 @@ class MenuLinksController extends AppController
         }
         
         $menus = $this->MenuLinks->Menus->find('list', ['limit' => 200]);
-        $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', ['spacer' => '-- ']);
-        $translationLocales = $this->_getTranslationLanguages();
+        $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', ['spacer' => '-- '])
+                ->where(['menu_id' => $menuId]);
         
-        $this->set(compact('menuLink', 'menus', 'parentMenuLinks', 'translationLocales'));
+        $this->set(compact('menuLink', 'menus', 'parentMenuLinks'));
     }
 
     /**
@@ -102,50 +107,6 @@ class MenuLinksController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
-    }
-    
-    /**
-     * Add Menu Link as parent or sub Link. When second parameter is not passed
-     * it appear as Parent Link. Otherwise sub link.
-     * 
-     * Also when second parameter is not passed method will redirect to Menu preview,
-     * otherwise to Parent Link preview.
-     * 
-     * @param int $menuId
-     * @param int $parentId
-     * @return @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
-    public function addTo(int $menuId, int $parentId = NULL)
-    {
-        $menuLink = $this->MenuLinks->newEntity();
-        
-        $menuLink->menu_id = $menuId;
-        $menuLink->parent_id = $parentId;
-        
-                $redirectUrl = $parentId === NULL ? 
-                    ['controller' => 'Menus', 'action' => 'view', $menuId] : 
-                    ['controller' => 'MenuLinks', 'action' => 'view', $parentId];
-                
-        if ($this->request->is('post')) {
-            $menuLink = $this->MenuLinks->patchEntity($menuLink, $this->request->getData());
-            if ($this->MenuLinks->save($menuLink)) {
-                $this->Flash->success(__('The menu point has been saved.'));
-                
-                return $this->redirect($redirectUrl);
-            }
-            $this->Flash->error(__('The menu point could not be saved. Please, try again.'));
-        }
-        
-        $menus = $this->MenuLinks->Menus->find('list', ['conditions' => ['id' => $menuId]]);
-        $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', [
-            'spacer' => '-- ',
-            'conditions' => ['menu_id' => $menuId]
-        ]);
-        $translationLocales = $this->_getTranslationLanguages();
-        
-        $this->set(compact('menuLink', 'menus', 'parentMenuLinks', 'translationLocales'));
-        
-        $this->viewBuilder()->setTemplate('add');
     }
     
     /**
