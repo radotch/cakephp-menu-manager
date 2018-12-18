@@ -224,7 +224,7 @@ class MenuLinksController extends AppController
         if (empty($menuLink->_translations)) {
             $this->Flash->error(__('The Translation Not Found'));
             
-            return $this->redirect(['action' => 'translations', $menuLink->id]);
+            return $this->redirect(['action' => 'view', $menuLink->id]);
         }
         
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -233,7 +233,7 @@ class MenuLinksController extends AppController
             if ($this->MenuLinks->save($menuLink)) {
                 $this->Flash->success(__('The Translation was updated successful.'));
                 
-                return $this->redirect(['action' => 'translations', $menuLink->id]);
+                return $this->redirect(['action' => 'view', $menuLink->id]);
             }
             
             $this->Flash->error(__('The Translation update failed.'));
