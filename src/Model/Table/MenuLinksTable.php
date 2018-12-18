@@ -99,6 +99,11 @@ class MenuLinksTable extends Table
             ->integer('menu_id')
             ->requirePresence('menu_id')
             ->notEmpty('menu_id');
+        
+        $validator
+                ->integer('position')
+                ->requirePresence('position', true)
+                ->allowEmpty('position');
 
         return $validator;
     }
