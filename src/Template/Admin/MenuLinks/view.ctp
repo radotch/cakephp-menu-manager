@@ -8,18 +8,15 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li class="divider"></li>
-        <li><?= $this->Html->link(__('Edit Menu Link'), ['action' => 'edit', $menuLink->id]) ?> </li>
+        <li><?= $this->Html->link(__('Edit Menu Link'), ['action' => 'edit', $menuLink->id, $menuLink->parent_id]) ?></li>
+        <li><?= $this->Html->link(__('Add Child Link'), ['action' => 'add', $menuLink->menu_id, $menuLink->id]) ?></li>
+        <li><?= $this->Html->link(__('Translate Menu Link'), ['action' => 'translate', $menuLink->id]) ?></li>
         <li><?= $this->Form->postLink(__('Delete Menu Link'), ['action' => 'delete', $menuLink->id], ['confirm' => __('Are you sure you want to delete # {0}?', $menuLink->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Menu Links'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Menu Link'), ['action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Parent Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('List Child Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?> </li>
         <li class="divider"></li>
         <li><?= $this->Html->link(__('List Menus'), ['controller' => 'Menus', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Menu'), ['controller' => 'Menus', 'action' => 'add']) ?> </li>
-        <li class="divider"></li>
-        <li><?= $this->Html->link(__('List Parent Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Parent Menu Link'), ['controller' => 'MenuLinks', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Child Menu Links'), ['controller' => 'MenuLinks', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Child Menu Link'), ['controller' => 'MenuLinks', 'action' => 'addTo', $menuLink->menu_id, $menuLink->id]) ?> </li>
+        <li><?= $this->Html->link(__('View Menu'), ['controller' => 'Menus', 'action' => 'view', $menuLink->menu_id]) ?> </li>
     </ul>
 </nav>
 <div class="menuLinks view large-9 medium-8 columns content">
@@ -68,15 +65,29 @@
         </tr>
     </table>
     <div class="related">
+        <h4><?= __('Related Menu Link Translations') ?></h4>
+        <?php if (count($menuLink->_translations) > 0): ?>
+        <table>
+            <tr>
+                <th><?= __('Language') ?></th>
+                <th><?= __('Title') ?></th>
+                <th><?= __('Actions') ?></th>
+            </tr>
+            <tbody>
+                <?php foreach ($menuLink->_translations as $locale => $translation): ?>
+                <tr>
+                    <td><?= Locale::getDisplayLanguage($locale) ?></td>
+                    <td><?= $translation->title ?></td>
+                    <td><?= $this->Html->link(__('Edit'), ['action' => 'translationEdit', $menuLink->id, $locale]) ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php endif; ?>
+    </div>
+    <div class="related">
         <h4><?= __('Related Menu Links') ?></h4>
         <p class="subheader" style="margin-top: -0.75rem; margin-bottom: 1.5rem;"><?= __('(Only direct children)')  ?></p>
-        <div>
-            <?= $this->Html->link(
-                __('Add New Child Menu Link'),
-                ['controller' => 'MenuLinks', 'action' => 'addTo', $menuLink->menu_id, $menuLink->id],
-                ['class' => 'button small secondary']
-            ) ?>
-        </div>
         
         <?php if (!empty($menuLink->child_menu_links)): ?>
         <table cellpadding="0" cellspacing="0">

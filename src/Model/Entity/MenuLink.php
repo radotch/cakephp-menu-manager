@@ -2,6 +2,7 @@
 namespace MenuManager\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\ORM\Behavior\Translate\TranslateTrait;
 
 /**
  * MenuLink Entity
@@ -16,6 +17,8 @@ use Cake\ORM\Entity;
  * @property bool $is_active
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * 
+ * @property array $_translations MenuLink Translations
  *
  * @property \MenuManager\Model\Entity\Menu $menu
  * @property \MenuManager\Model\Entity\ParentMenuLink $parent_menu_link
@@ -23,6 +26,7 @@ use Cake\ORM\Entity;
  */
 class MenuLink extends Entity
 {
+    use TranslateTrait;
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -45,6 +49,7 @@ class MenuLink extends Entity
         'modified' => true,
         'menu' => true,
         'parent_menu_link' => true,
-        'child_menu_links' => true
+        'child_menu_links' => true,
+        '_translations' => true
     ];
 }

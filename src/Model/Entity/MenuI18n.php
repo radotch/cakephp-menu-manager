@@ -2,22 +2,19 @@
 namespace MenuManager\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\ORM\Behavior\Translate\TranslateTrait;
 
 /**
- * Menu Entity
+ * MenuI18n Entity
  *
  * @property int $id
- * @property string $title
- * @property string $alias
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime $modified
- *
- * @property \MenuManager\Model\Entity\MenuLink[] $menu_links
+ * @property string $locale
+ * @property string $model
+ * @property int $foreign_key
+ * @property string $field
+ * @property string $content
  */
-class Menu extends Entity
+class MenuI18n extends Entity
 {
-    use TranslateTrait;
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -29,11 +26,10 @@ class Menu extends Entity
      * @var array
      */
     protected $_accessible = [
-        'title' => true,
-        'alias' => true,
-        'created' => true,
-        'modified' => true,
-        'menu_links' => true,
-        '_translations' => true
+        'locale' => true,
+        'model' => true,
+        'foreign_key' => true,
+        'field' => true,
+        'content' => true
     ];
 }

@@ -5,6 +5,8 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Event\Event;
+use ArrayObject;
 
 /**
  * MenuLinks Model
@@ -44,6 +46,10 @@ class MenuLinksTable extends Table
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Tree');
+        $this->addBehavior('Translate', [
+            'fields' => ['title'],
+            'translationTable' => 'MenuManager.MenuI18n'
+        ]);
 
         $this->belongsTo('Menus', [
             'foreignKey' => 'menu_id',
@@ -110,5 +116,22 @@ class MenuLinksTable extends Table
         $rules->add($rules->existsIn(['parent_id'], 'ParentMenuLinks'));
 
         return $rules;
+    }
+    
+    /**
+     * Method removes empty translations from request data.
+     * 
+     * @param Event $event
+     * @param ArrayObject $data
+     * @param \MenuManager\Model\Table\Arraybject $options
+     */
+    public function beforeMarshal(Event $event, ArrayObject $data, ArrayObject $options)
+    {
+        $translations = array_key_exists('_translations', $data) ? $data['_translations'] : [];
+        foreach ($translations as $lang => $translation) {
+            if ($translation['title'] === '') {
+                unset($data['_translations'][$lang]);
+            }
+        }
     }
 }

@@ -17,6 +17,7 @@ For testing:
  - Create Menu
  - Create Menu Links associated to Menu
  - Menu Links have Tree structure. It's make easy to create dropdowns, accordeon or other specific kind of Menu.
+ - Translations
 
 ## Installation
 
@@ -30,27 +31,22 @@ composer require radotch/cakephp-menu-manager
 
 ## Load plugin
 
-To make the plugin available in the application execute on your command-line:
-
-```
-$ path/to/project> bin/cake plugin load MenuManager --routes --autoload
-```
-
-The command line alternative is to add next line:
+To load plugin add next line in bootstrap() method in Application.php file:
 ```
 $this->addPlugin('MenuManager', ['autoload' => true, 'routes' => true]);
 ```
+or you can use object way
+```
+$plugin = new \MenuManager\Plugin(array $config = [])
+            ->disable('bootstrap')
+            ->enable('routes');
+$this->addPlugin($plugin)
+```
 
-at bootstrap method in Application.php file which will looks like:
+Prior 3.6.0 use next:
 
 ```
-public function bootstrap()
-{
-    $this->addPlugin('MenuManager', ['autoload' => true, 'routes' => true]);
-
-    // Call parent to load bootstrap from files.
-    parent::bootstrap();
-}
+Plugin::load('MenuManager', ['autoload' => true, 'routes' => true]);
 ```
 
 And you are ready to use MenuManager plugin.
@@ -62,6 +58,8 @@ Once the plug-in is available execute Migrations to create required tables:
 ```
 $ path/to/project> bin/cake migrations migrate --plugin MenuManager
 ```
+
+***Note:*** If table i18n already exists migration will not try to create it.
 
 There is available initial seed which can be used if cover application needs on start or just for test purposes:
 
@@ -99,6 +97,28 @@ $menuLinks = $this->TableRegistry::getTableLocator()
         // Some query requirements
         ->where(['menu_id' => $menuId]);
 ```
+
+### Translation
+To be able to add translations about Menu and Menu Links set next Configuration
+as associative array or list:
+
+```
+$language = [
+    'bg_BG' => 'Bulgarian',
+    'en' => 'English',
+    'en_US' => 'English (United States)'
+];
+Configure::write('MenuManager.Translation.Languages', $languages);
+```
+
+or 
+
+```
+$plugin = new \MenuManager\Plugin($config = []);
+$plugin->setTranslations($languages);
+```
+
+The best place is bootstrap() method at Application.php I think. 
 
 ### Display Menu
 

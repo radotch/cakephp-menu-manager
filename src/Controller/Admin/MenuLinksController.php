@@ -9,27 +9,12 @@ use MenuManager\Controller\AppController;
  * @property \MenuManager\Model\Table\MenuLinksTable $MenuLinks
  *
  * @method \MenuManager\Model\Entity\MenuLink[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method AppController _getTranslationLanguages()
  */
 class MenuLinksController extends AppController
 {
-
     /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Menus', 'ParentMenuLinks']
-        ];
-        $menuLinks = $this->paginate($this->MenuLinks);
-
-        $this->set(compact('menuLinks'));
-    }
-
-    /**
-     * View method
+     * Get Menu Link by id.
      *
      * @param string|null $id Menu Link id.
      * @return \Cake\Http\Response|void
@@ -38,31 +23,40 @@ class MenuLinksController extends AppController
     public function view($id = null)
     {
         $menuLink = $this->MenuLinks->get($id, [
-            'contain' => ['Menus', 'ParentMenuLinks', 'ChildMenuLinks']
+            'contain' => ['Menus', 'ParentMenuLinks', 'ChildMenuLinks'],
+            'finder' => 'translations'
         ]);
 
         $this->set('menuLink', $menuLink);
     }
 
     /**
-     * Add method
-     *
+     * Add Menu Link to Menu.
+     * 
+     * @param int $menuId
+     * @param int|NULL $parentLinkId
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(int $menuId, int $parentLinkId = NULL)
     {
         $menuLink = $this->MenuLinks->newEntity();
+        $menuLink->menu_id = $menuId;
+        $menuLink->parent_id = $parentLinkId;
+        
         if ($this->request->is('post')) {
             $menuLink = $this->MenuLinks->patchEntity($menuLink, $this->request->getData());
             if ($this->MenuLinks->save($menuLink)) {
                 $this->Flash->success(__('The menu link has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'Menus', 'action' => 'view', $menuLink->menu_id]);
             }
             $this->Flash->error(__('The menu link could not be saved. Please, try again.'));
         }
+        
         $menus = $this->MenuLinks->Menus->find('list', ['limit' => 200]);
-        $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', ['spacer' => '-- ']);
+        $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', ['spacer' => '-- '])
+                ->where(['menu_id' => $menuId]);
+        
         $this->set(compact('menuLink', 'menus', 'parentMenuLinks'));
     }
 
@@ -83,12 +77,15 @@ class MenuLinksController extends AppController
             if ($this->MenuLinks->save($menuLink)) {
                 $this->Flash->success(__('The menu link has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $menuLink->id]);
             }
             $this->Flash->error(__('The menu link could not be saved. Please, try again.'));
         }
-        $menus = $this->MenuLinks->Menus->find('list', ['limit' => 200]);
-        $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', ['spacer' => '-- ']);
+        
+        $menus = $this->MenuLinks->Menus->find('list', ['limit' => 200])->where(['id' => $menuLink->menu_id]);
+        $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', ['spacer' => '-- '])
+                ->where(['menu_id' => $menuLink->menu_id]);
+        
         $this->set(compact('menuLink', 'menus', 'parentMenuLinks'));
     }
 
@@ -109,64 +106,86 @@ class MenuLinksController extends AppController
             $this->Flash->error(__('The menu link could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['controller' => 'Menus', 'action' => 'view', $menuLink->menu_id]);
     }
     
     /**
-     * Add Menu Link as parent or sub Link. When second parameter is not passed
-     * it appear as Parent Link. Otherwise sub link.
+     * Get MenuLink entity with translations.
+     * Filter translation languages to all that Menu Link is not translated.
+     * When save Menu Link data, on success redirect to Menu Link preview.
+     * The method do the same when Menu Link has translations about all supported
+     * languages.
      * 
-     * Also when second parameter is not passed method will redirect to Menu preview,
-     * otherwise to Parent Link preview.
-     * 
-     * @param int $menuId
-     * @param int $parentId
-     * @return @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @param string $id Menu Link id
+     * @return \Cake\Http\Response|\Cake\View\View
      */
-    public function addTo(int $menuId, int $parentId = NULL)
+    public function translate(string $id)
     {
-        $menuLink = $this->MenuLinks->newEntity();
-        
-        $menuLink->menu_id = $menuId;
-        $menuLink->parent_id = $parentId;
-        
-                $redirectUrl = $parentId === NULL ? 
-                    ['controller' => 'Menus', 'action' => 'view', $menuId] : 
-                    ['controller' => 'MenuLinks', 'action' => 'view', $parentId];
-                
-        if ($this->request->is('post')) {
-            $menuLink = $this->MenuLinks->patchEntity($menuLink, $this->request->getData());
-            if ($this->MenuLinks->save($menuLink)) {
-                $this->Flash->success(__('The menu point has been saved.'));
-                
-                return $this->redirect($redirectUrl);
-            }
-            $this->Flash->error(__('The menu point could not be saved. Please, try again.'));
-        }
-        
-        $menus = $this->MenuLinks->Menus->find('list', ['conditions' => ['id' => $menuId]]);
-        $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', [
-            'spacer' => '-- ',
-            'conditions' => ['menu_id' => $menuId]
+        $menuLink = $this->MenuLinks->get($id, [
+            'finder' => 'translations'
         ]);
         
-        $this->set(compact('menuLink', 'menus', 'parentMenuLinks'));
+        if ($this->request->is(['patch', 'put', 'post'])) {
+            $this->request = $this->request->withData('translation.menu_id', $menuLink->menu_id);
+            $menuLink->setAccess('_locale', TRUE);
+            $menuLink = $this->MenuLinks->patchEntity($menuLink, $this->request->getData('translation'));
+            
+            if ($this->MenuLinks->save($menuLink)) {
+                $this->Flash->success(__('Menu Link Translation was saved successful.'));
+                
+                return $this->redirect(['action' => 'view', $menuLink->id]);
+            }
+            
+            $this->Flash->error(__('Menu Link Translation failed to save. Please, try again.'));
+            
+        }
         
-        $this->viewBuilder()->setTemplate('add');
+        $translationLanguages = $this->_getTranslationLanguages();
+        $languages = array_diff_key($translationLanguages, $menuLink->_translations);
+        
+        if (count($languages) === 0) {
+            $this->Flash->success(__('Menu Link "{0}" has translations about all supported languages.', $menuLink->title));
+            
+            return $this->redirect(['action' => 'view', $menuLink->id]);
+        }
+        
+        $this->set(compact('menuLink', 'languages'));
     }
     
     /**
-     * Method gets all Menu Link as 'threaded' and grouped by Menu title.
+     * Method get MenuLink entity with translation by passed language (locale)
+     * and save it after edit.
      * 
-     * @param none
-     * @return \Cake\Http\Response|void
+     * @param string $id Menu Link id
+     * @param string $locale Locale about translation
+     * @return void|\Cake\Http\Client\Response 
      */
-    public function tree()
+    public function translationEdit(string $id, string $locale)
     {
-        $menuLinksGroups = $this->MenuLinks->find('threaded')
-                ->contain(['Menus'])
-                ->groupBy('menu.title');
+        $menuLink = $this->MenuLinks->get($id, [
+            'finder' => 'translations',
+            'locales' => $locale
+        ]);
         
-        $this->set('menuLinksGroups', $menuLinksGroups);
+        if (empty($menuLink->_translations)) {
+            $this->Flash->error(__('The Translation Not Found'));
+            
+            return $this->redirect(['action' => 'view', $menuLink->id]);
+        }
+        
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $menuLink = $this->MenuLinks->patchEntity($menuLink, $this->request->getData());
+            
+            if ($this->MenuLinks->save($menuLink)) {
+                $this->Flash->success(__('The Translation was updated successful.'));
+                
+                return $this->redirect(['action' => 'view', $menuLink->id]);
+            }
+            
+            $this->Flash->error(__('The Translation update failed.'));
+        }
+        
+        $this->set('locale', $locale);
+        $this->set('menuLink', $menuLink);
     }
 }

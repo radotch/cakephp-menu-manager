@@ -8,24 +8,19 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li class="divider"></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $menu->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $menu->id)]
-            )
-        ?></li>
+        <li><?= $this->Html->link(__('View Menu'), ['action' => 'view', $menu->id]) ?></li>
         <li><?= $this->Html->link(__('List Menus'), ['action' => 'index']) ?></li>
     </ul>
 </nav>
 <div class="menus form large-9 medium-8 columns content">
-    <h3><?= __('Menu preview') ?></h3>
+    <h3><?= __('Translate Menu') ?></h3>
     
     <?= $this->Form->create($menu) ?>
     <fieldset>
         <legend><?= __('Menu') . ': ' . h($menu->title) ?></legend>
         <?php
-            echo $this->Form->control('title');
-            echo $this->Form->control('alias', ['disabled']);
+            echo $this->Form->control('_locale', ['required' => TRUE, 'options' => $languages, 'label' => __('Language')]);
+            echo $this->Form->control('title', ['label' => __('Title')]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
