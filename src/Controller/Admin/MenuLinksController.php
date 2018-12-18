@@ -110,21 +110,6 @@ class MenuLinksController extends AppController
     }
     
     /**
-     * Method gets all Menu Link as 'threaded' and grouped by Menu title.
-     * 
-     * @param none
-     * @return \Cake\Http\Response|void
-     */
-    public function tree()
-    {
-        $menuLinksGroups = $this->MenuLinks->find('threaded')
-                ->contain(['Menus'])
-                ->groupBy('menu.title');
-        
-        $this->set('menuLinksGroups', $menuLinksGroups);
-    }
-    
-    /**
      * Get MenuLink entity with translations.
      * Filter translation languages to all that Menu Link is not translated.
      * When save Menu Link data, on success redirect to Menu Link preview.
