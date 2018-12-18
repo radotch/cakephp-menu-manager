@@ -17,6 +17,7 @@ For testing:
  - Create Menu
  - Create Menu Links associated to Menu
  - Menu Links have Tree structure. It's make easy to create dropdowns, accordeon or other specific kind of Menu.
+ - Menu Links positions
  - Translations
 
 ## Installation
@@ -97,6 +98,14 @@ $menuLinks = $this->TableRegistry::getTableLocator()
         // Some query requirements
         ->where(['menu_id' => $menuId]);
 ```
+
+#### Menu Links positions
+
+When create or update menu Link you can set link's position. If is changed at this point
+the change will not affect other links. All other Menu Link positions must be changed by hand.
+
+Sorry about that and later when I have little more time I'll automate it.
+Also support will be accepted and appreciated.
 
 ### Translation
 To be able to add translations about Menu and Menu Links set next Configuration
