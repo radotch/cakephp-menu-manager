@@ -81,8 +81,9 @@
                 <tr>
                     <th scope="col"><?= __('Title') ?></th>
                     <th scope="col"><?= __('Url') ?></th>
-                    <th scope="col"><?= __('Parent Id') ?></th>
-                    <th scope="col"><?= __('Is Active') ?></th>
+                    <th scope="col"><?= __('Position') ?></th>
+                    <th scope="col"><?= __('Parent') ?></th>
+                    <th scope="col"><?= __('Active') ?></th>
                     <th scope="col"><?= __('Created') ?></th>
                     <th scope="col" class="actions"><?= __('Actions') ?></th>
                 </tr>
@@ -90,6 +91,7 @@
                 <tr>
                     <td><?= h($menuLinks->title) ?></td>
                     <td><?= h($menuLinks->url) ?></td>
+                    <td><?= $this->Number->format($menuLinks->position) ?></td>
                     <td><?= $menuLinks->has('parent_menu_link') ?
                                 $this->Html->link(h($menuLinks->parent_menu_link->title), ['controller' => 'MenuLinks', 'action' => 'view', $menuLinks->parent_menu_link->id]) :
                                 h($menuLinks->parent_id) ?>

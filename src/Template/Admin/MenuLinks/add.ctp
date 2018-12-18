@@ -19,11 +19,12 @@
     <fieldset>
         <legend><?= __('Menu Link data') ?></legend>
         <?php
-        echo $this->Form->control('title');
-        echo $this->Form->control('url');
-        echo $this->Form->control('menu_id', ['options' => $menus, 'empty' => __('(Select menu)')]);
-        echo $this->Form->control('parent_id', ['options' => $parentMenuLinks, 'empty' => __('(No parent link)')]);
-        echo $this->Form->control('is_active');
+        echo $this->Form->control('title', ['label' => __('Title')]);
+        echo $this->Form->control('url', ['label' => __('Url')]);
+        echo $this->Form->control('position', ['label' => __('Position'), 'step' => '1']);
+        echo $this->Form->control('menu_id', ['options' => $menus, 'empty' => __('(Select menu)'), 'label' => __('Menu')]);
+        echo $this->Form->control('parent_id', ['options' => $parentMenuLinks, 'empty' => __('(No parent link)'), 'label' => __('Parent')]);
+        echo $this->Form->control('is_active', ['label' => __('Active')]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

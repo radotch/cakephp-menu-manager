@@ -32,6 +32,10 @@
             <td><?= h($menuLink->url) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Position') ?></th>
+            <td><?= $this->Number->format($menuLink->position) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Menu') ?></th>
             <td><?= $menuLink->has('menu') ? $this->Html->link($menuLink->menu->title, ['controller' => 'Menus', 'action' => 'view', $menuLink->menu->id]) : '' ?></td>
         </tr>

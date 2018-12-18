@@ -32,6 +32,7 @@
         <?php
             echo $this->Form->control('title');
             echo $this->Form->control('url');
+            echo $this->Form->control('position', ['label' => __('Position'), 'step' => '1']);
             echo $this->Form->control('menu_id', ['options' => $menus]);
             echo $this->Form->control('parent_id', ['options' => $parentMenuLinks, 'empty' => __('(No parent link)')]);
             echo $this->Form->control('is_active');
