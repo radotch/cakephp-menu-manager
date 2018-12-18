@@ -47,6 +47,7 @@ class MenuLink extends Entity
         'is_active' => true,
         'created' => true,
         'modified' => true,
+        'position' => true,
         'menu' => true,
         'parent_menu_link' => true,
         'child_menu_links' => true,
