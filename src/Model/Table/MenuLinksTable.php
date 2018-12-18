@@ -102,7 +102,7 @@ class MenuLinksTable extends Table
         
         $validator
                 ->integer('position')
-                ->requirePresence('position', true)
+                ->requirePresence('position', 'create')
                 ->allowEmpty('position');
 
         return $validator;
