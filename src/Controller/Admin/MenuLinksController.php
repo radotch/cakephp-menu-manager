@@ -106,7 +106,7 @@ class MenuLinksController extends AppController
             $this->Flash->error(__('The menu link could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['controller' => 'Menus', 'action' => 'view', $menuLink->menu_id]);
     }
     
     /**
