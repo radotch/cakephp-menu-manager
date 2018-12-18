@@ -17,6 +17,7 @@ use Cake\ORM\Behavior\Translate\TranslateTrait;
  * @property bool $is_active
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * @property int $position
  * 
  * @property array $_translations MenuLink Translations
  *
