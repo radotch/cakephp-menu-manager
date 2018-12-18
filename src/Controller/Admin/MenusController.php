@@ -39,11 +39,14 @@ class MenusController extends AppController
         $relatedLinksPreview = $this->request->getQuery('related_links_preview') !== 'tree' ? 'list' : 'tree';
         $menuLinksFinder = $relatedLinksPreview === 'tree' ? 'threaded' : 'all';
         $menu = $this->Menus->get($id, [
+            'finder' => 'translations',
             'contain' => [
-                'MenuLinks' => ['finder' => $menuLinksFinder],
+                'MenuLinks' => [
+                    'finder' => $menuLinksFinder,
+                    'sort' => ['MenuLinks.parent_id' => 'ASC', 'MenuLinks.position' => 'ASC']
+                ],
                 'MenuLinks.ParentMenuLinks'
-            ],
-            'finder' => 'translations'
+            ]
         ]);
 
         $this->set('menu', $menu);
