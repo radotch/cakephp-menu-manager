@@ -82,7 +82,8 @@ class MenuLinksController extends AppController
             $this->Flash->error(__('The menu link could not be saved. Please, try again.'));
         }
         
-        $menus = $this->MenuLinks->Menus->find('list', ['limit' => 200])->where(['id' => $menuLink->menu_id]);
+        $menus = $this->MenuLinks->Menus->find('list', ['limit' => 200])
+                ->where(['Menus.id' => $menuLink->menu_id]);
         $parentMenuLinks = $this->MenuLinks->ParentMenuLinks->find('treeList', ['spacer' => '-- '])
                 ->where(['menu_id' => $menuLink->menu_id]);
         
